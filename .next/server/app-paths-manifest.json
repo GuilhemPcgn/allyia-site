@@ -1,0 +1,7 @@
+{
+  "/application/page": "app/application/page.js",
+  "/communaute/page": "app/communaute/page.js",
+  "/espace-pro/page": "app/espace-pro/page.js",
+  "/page": "app/page.js",
+  "/a-propos/page": "app/a-propos/page.js"
+}
