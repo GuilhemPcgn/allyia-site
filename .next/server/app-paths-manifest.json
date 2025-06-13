@@ -1,7 +1,9 @@
 {
+  "/_not-found": "app/_not-found.js",
+  "/a-propos/page": "app/a-propos/page.js",
   "/application/page": "app/application/page.js",
-  "/communaute/page": "app/communaute/page.js",
   "/espace-pro/page": "app/espace-pro/page.js",
+  "/communaute/page": "app/communaute/page.js",
   "/page": "app/page.js",
-  "/a-propos/page": "app/a-propos/page.js"
+  "/participez/page": "app/participez/page.js"
 }
