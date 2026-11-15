@@ -1,133 +1,124 @@
-import Image from 'next/image';
-import { teamMembers, history, values, commitments } from '@/lib/data';
-import { Heart, Lightbulb, Users, Shield, Lock, EyeOff } from 'lucide-react';
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import PageHero from '@/components/page-hero';
+import { site } from '@/lib/site';
 
-const iconMap = {
-  heart: Heart,
-  lightbulb: Lightbulb,
-  users: Users,
-  shield: Shield,
-  lock: Lock,
-  'eye-off': EyeOff,
+export const metadata: Metadata = {
+  title: 'À propos',
+  description:
+    "L'équipe d'Allyia, son ancrage en Normandie et ses valeurs : bienveillance, éthique, empowerment.",
+  alternates: { canonical: '/a-propos' },
 };
 
-export default function AboutPage() {
+const team = [
+  {
+    name: 'Guilhem Poincignon',
+    role: 'Cofondateur, technique',
+    text: "Développeur, Guilhem conçoit et construit l'application.",
+    img: '/img/guilhem.webp',
+  },
+  {
+    name: 'Tallal Ibnaiche',
+    role: 'Cofondateur, stratégie, produit et business',
+    text: 'Planneur stratégique de formation, Tallal pilote la stratégie, le produit et le développement du projet.',
+    img: '/img/tallal.webp',
+  },
+];
+
+const values = [
+  {
+    title: 'Bienveillance',
+    text: 'Pas de série à tenir, pas de reproche après une absence. Allyia accueille ce que tu notes, quand tu le notes.',
+  },
+  {
+    title: 'Éthique',
+    text: 'Nous n’écrivons que ce que l’app fait vraiment. Pas de promesse d’effet thérapeutique, pas de diagnostic, pas de publicité ciblée.',
+  },
+  {
+    title: 'Empowerment',
+    text: 'Tes données et tes mots t’appartiennent. C’est toi qui décides ce que tu gardes, ce que tu modifies et ce que tu partages.',
+  },
+];
+
+export default function APropos() {
   return (
-    <div className="pt-20">
-      {/* Histoire Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h1 className="text-4xl font-bold mb-6">À Propos d'Allyia</h1>
-            <p className="text-lg text-muted-foreground">
-              Découvrez notre histoire, notre équipe et nos valeurs
+    <>
+      <PageHero
+        eyebrow="À propos"
+        title="Un miroir, pas un oracle"
+        lead="Allyia est née d'un constat simple : l'essentiel d'un suivi se joue entre les séances, et rien n'aide vraiment à en garder la trace. Nous construisons l'outil qui manque, sans prendre la place du psychologue."
+        tone="from-cream"
+      />
+
+      <section className="wrap pb-16 sm:pb-24" aria-labelledby="equipe">
+        <h2 id="equipe" className="h2">L&apos;équipe</h2>
+        <ul className="mt-10 grid gap-6 md:grid-cols-2">
+          {team.map((m) => (
+            <li key={m.name} className="card flex flex-col gap-6 sm:flex-row sm:items-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={m.img}
+                width={480}
+                height={480}
+                alt={`Portrait de ${m.name}`}
+                loading="lazy"
+                className="h-32 w-32 shrink-0 rounded-full object-cover"
+              />
+              <div>
+                <h3 className="h3">{m.name}</h3>
+                <p className="mt-1 font-semibold text-muted">{m.role}</p>
+                <p className="mt-3">{m.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="bg-lavender" aria-labelledby="normandie">
+        <div className="wrap section grid gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 id="normandie" className="h2">Ancrés en Normandie</h2>
+            <p className="mt-5 text-lg">
+              Allyia se construit en Normandie. C&apos;est là que nous travaillons, et c&apos;est avec des
+              psychologues normands que nous préparons la bêta de l&apos;espace qui leur sera destiné.
+            </p>
+            <p className="mt-5">
+              <Link className="link" href="/psychologues">Vous êtes psychologue ?</Link>
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-foreground">{history.title}</h2>
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                {history.description}
-              </p>
-            </div>
-            <div className="relative w-full h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg">
-              <Image
-                src={history.image}
-                alt="L'histoire d'Allyia"
-                fill
-                className="object-cover"
-              />
-            </div>
+          <div>
+            <h2 className="h2">Où en est le projet</h2>
+            <ol className="mt-6 space-y-5">
+              {[
+                ['Printemps 2027', 'Lancement de l’application, sur iPhone.'],
+                ['2028', 'Espace pour les psychologues, d’abord en bêta.'],
+                ['Plus tard', 'D’autres fonctions sont à l’étude. Nous n’en parlerons que lorsqu’elles seront prêtes.'],
+              ].map(([d, t]) => (
+                <li key={d} className="border-l-4 border-plum pl-4">
+                  <p className="font-display text-lg font-bold text-plum">{d}</p>
+                  <p>{t}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
 
-      {/* Fondateurs Section */}
-      <section className="py-16 md:py-24 bg-primary/5">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16">Nos Fondateurs</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {teamMembers.map((member) => (
-              <div
-                key={member.name}
-                className="bg-background rounded-xl overflow-hidden shadow-sm transition-all hover:shadow-md"
-              >
-                <div className="relative h-[600px] w-full">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-semibold mb-2">{member.name}</h3>
-                  <p className="text-primary font-medium mb-4">{member.role}</p>
-                  <div className="text-muted-foreground">{member.bio}</div> <br></br>
-                  <blockquote className="border-l-4 border-gray-300 pl-4 text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary bg-[length:200%_200%] animate-gradient-x font-bold italic">
-                    {member.quote}
-                  </blockquote>
-
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      <section className="wrap section" aria-labelledby="valeurs">
+        <h2 id="valeurs" className="h2">Nos valeurs</h2>
+        <ul className="mt-10 grid gap-5 md:grid-cols-3">
+          {values.map((v) => (
+            <li key={v.title} className="card">
+              <h3 className="h3">{v.title}</h3>
+              <p className="mt-3 text-muted">{v.text}</p>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-12 text-lg">
+          Une question, une envie d&apos;échanger ?{' '}
+          <a className="link" href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
       </section>
-
-      {/* Valeurs Section */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16">Nos Valeurs</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {values.map((value) => {
-              const Icon = iconMap[value.icon as keyof typeof iconMap];
-              return (
-                <div
-                  key={value.title}
-                  className="bg-primary/5 rounded-xl p-8 text-center transition-all hover:shadow-md"
-                >
-                  <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 text-primary mb-6">
-                    {Icon && <Icon size={32} />}
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3">{value.title}</h3>
-                  <p className="text-muted-foreground">{value.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Engagements Section */}
-      <section className="py-16 md:py-24 bg-primary/5">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16">Nos Engagements</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {commitments.map((commitment) => {
-              const Icon = iconMap[commitment.icon as keyof typeof iconMap];
-              return (
-                <div
-                  key={commitment.title}
-                  className="bg-background rounded-xl p-8 transition-all hover:shadow-md"
-                >
-                  <div className="flex items-center mb-4">
-                    <div className="mr-4 flex-shrink-0">
-                      {Icon && <Icon size={24} className="text-primary" />}
-                    </div>
-                    <h3 className="text-xl font-semibold">{commitment.title}</h3>
-                  </div>
-                  <p className="text-muted-foreground">{commitment.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-    </div>
+    </>
   );
 }
