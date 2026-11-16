@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import BrowserCapture from '@/components/browser-capture';
 import { Check } from '@/components/icons';
 import PageHero from '@/components/page-hero';
 import WaitlistForm from '@/components/waitlist-form';
@@ -9,6 +10,45 @@ export const metadata: Metadata = {
     "Allyia prépare pour 2028 un espace destiné aux psychologues : voir ce que vos patients choisissent de partager entre deux séances. Liste d'attente et candidature à la bêta.",
   alternates: { canonical: '/psychologues' },
 };
+
+const maquettes = [
+  {
+    src: '/maquettes-psy/aujourdhui.webp',
+    width: 1600,
+    height: 1037,
+    label: 'Aujourd’hui',
+    title: 'Vos séances du jour',
+    text: 'Seules les séances pour lesquelles un patient vous a remis une synthèse apparaissent. Rien ne vous parvient entre deux séances.',
+    alt: 'Maquette de l’écran « Aujourd’hui » : trois synthèses remises pour les séances de 9 h, 11 h et 16 h 30, chacune avec sa date de validation par le patient, et un encadré rappelant qu’il n’y a rien à surveiller entre deux séances.',
+  },
+  {
+    src: '/maquettes-psy/synthese.webp',
+    width: 1600,
+    height: 1489,
+    label: 'Synthèse avant séance',
+    title: 'Une synthèse écrite par le patient',
+    text: 'Ses sujets dans son ordre et avec ses mots, ce qu’il retient, ce qu’il a essayé. Le patient la relit et la valide avant de vous l’envoyer.',
+    alt: 'Maquette d’une synthèse avant séance pour une patiente fictive : trois sujets qu’elle souhaite aborder, cités entre guillemets, ce qu’elle retient et ce qu’elle essaie, puis ses retours sur deux exercices et un résumé de son journal étiqueté « Résumé automatique, relu par Camille ».',
+  },
+  {
+    src: '/maquettes-psy/partage.webp',
+    width: 1600,
+    height: 1211,
+    label: 'Partage et accès',
+    title: 'Le patient choisit ce qu’il partage',
+    text: 'Catégorie par catégorie. Chaque ouverture, impression ou envoi s’inscrit dans un journal des accès que le patient voit aussi.',
+    alt: 'Maquette de l’écran « Partage et accès » : un tableau des catégories partagées ou non par la patiente (sujets, retenu et essayé, retours sur les fiches, résumé du journal, repères, traitements), et à droite le journal des accès daté.',
+  },
+  {
+    src: '/maquettes-psy/envoyer.webp',
+    width: 1600,
+    height: 1178,
+    label: 'Envoyer une fiche',
+    title: 'Des exercices envoyés après la séance',
+    text: 'Vous choisissez une fiche, un rythme et quelques mots de consigne. Le patient règle lui-même ses rappels.',
+    alt: 'Maquette de l’écran « Envoyer une fiche » : choix d’un exercice de respiration, du rythme proposé et d’une consigne écrite, avec à droite un aperçu de ce que la patiente verra dans son application iPhone.',
+  },
+];
 
 export default function Psychologues() {
   return (
@@ -86,6 +126,33 @@ export default function Psychologues() {
             ))}
           </ul>
         </div>
+      </section>
+
+      <section className="wrap section" aria-labelledby="apercu-psy">
+        <p className="eyebrow">Maquettes de travail</p>
+        <h2 id="apercu-psy" className="h2 mt-4 max-w-3xl">À quoi pourrait ressembler votre espace</h2>
+        <p className="lead mt-5 max-w-2xl">
+          Ces écrans sont des maquettes, pas un produit : l&apos;espace psychologues n&apos;est pas encore construit
+          et évoluera avec les praticiens de la bêta. Les patients et les données sont fictifs.
+        </p>
+        <ul className="mt-14 space-y-16 sm:space-y-24">
+          {maquettes.map((m, i) => (
+            <li key={m.src}>
+              <figure
+                className={`grid items-center gap-8 lg:gap-14 ${i % 2 ? 'lg:grid-cols-[1fr_1.7fr]' : 'lg:grid-cols-[1.7fr_1fr]'}`}
+              >
+                <div className={i % 2 ? 'lg:order-2' : ''}>
+                  <BrowserCapture src={m.src} width={m.width} height={m.height} alt={m.alt} label={m.label} />
+                </div>
+                <figcaption className={i % 2 ? 'lg:order-1' : ''}>
+                  <p aria-hidden className="font-display text-lg font-bold text-muted">0{i + 1}</p>
+                  <h3 className="h3 mt-2">{m.title}</h3>
+                  <p className="mt-3 text-lg text-muted">{m.text}</p>
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section id="beta" className="bg-gradient-to-b from-paper to-mint" aria-labelledby="beta-titre">
